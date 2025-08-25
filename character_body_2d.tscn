@@ -63,7 +63,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"slash_down",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -80,10 +80,13 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("16_lmwkj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_skrk8")
 }],
 "loop": false,
 "name": &"slash_up",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -106,7 +109,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"swing_attack",
-"speed": 10.0
+"speed": 12.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6ct3r"]
@@ -120,7 +123,7 @@ script = ExtResource("1_73nau")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_qp52p")
-animation = &"idle"
+animation = &"slash_up"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
