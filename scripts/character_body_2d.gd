@@ -22,6 +22,10 @@ func _process(delta):
         handle_movement(delta, false)
     if Input.is_action_pressed("move_left") and not is_attacking:
         handle_movement(delta, true)
+    if Input.is_action_pressed("up") and not is_attacking:
+        position.y -= delta * run_speed
+    if Input.is_action_pressed("down") and not is_attacking:
+        position.y += delta * run_speed
     if Input.is_action_just_released("move_left") or Input.is_action_just_released("move_right"):
         sprite.play("idle")
 
@@ -33,6 +37,7 @@ func handle_movement(delta, flip):
         position.x += delta * run_speed
         sprite.flip_h = false
     sprite.play("running_with_sword")
+    move_and_slide()
 
 func handle_attack():
     is_attacking = true
