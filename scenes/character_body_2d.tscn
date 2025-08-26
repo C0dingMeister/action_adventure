@@ -1,18 +1,24 @@
-[gd_scene load_steps=31 format=3 uid="uid://c4u8etwajmpli"]
+[gd_scene load_steps=37 format=3 uid="uid://c4u8etwajmpli"]
 
 [ext_resource type="Script" uid="uid://c2fqiwgtokbm5" path="res://scripts/character_body_2d.gd" id="1_uduk5"]
+[ext_resource type="Texture2D" uid="uid://e4135h413bir" path="res://Adventurer-1.5/Individual Sprites/adventurer-fall-00.png" id="2_r8tdc"]
 [ext_resource type="Texture2D" uid="uid://dtvltyfh5nw6m" path="res://Adventurer-1.5/Indvidual Sprites/adventurer-idle-2-00-1.3.png" id="2_tyfdd"]
 [ext_resource type="Texture2D" uid="uid://cd0utxkjdfr0v" path="res://Adventurer-1.5/Indvidual Sprites/adventurer-idle-2-01-1.3.png" id="3_bae6d"]
+[ext_resource type="Texture2D" uid="uid://kesogwgs0cvu" path="res://Adventurer-1.5/Individual Sprites/adventurer-fall-01.png" id="3_teyxv"]
 [ext_resource type="Texture2D" uid="uid://cnm88ka0kdnjn" path="res://Adventurer-1.5/Indvidual Sprites/adventurer-idle-2-02-1.3.png" id="4_mamov"]
 [ext_resource type="Texture2D" uid="uid://c7c1t7xa81kk1" path="res://Adventurer-1.5/Indvidual Sprites/adventurer-idle-2-03-1.3.png" id="5_7oyl4"]
 [ext_resource type="Texture2D" uid="uid://klwlr277pamn" path="res://Adventurer-1.5/adventurer-run3-00.png" id="6_33wo8"]
+[ext_resource type="Texture2D" uid="uid://btqjcbkdjqci7" path="res://Adventurer-1.5/Individual Sprites/adventurer-jump-00.png" id="6_q7f82"]
 [ext_resource type="Texture2D" uid="uid://cknd7cpgpgq1c" path="res://Adventurer-1.5/Indvidual Sprites/adventurer-attack2-00-1.3.png" id="6_u2kg2"]
 [ext_resource type="Texture2D" uid="uid://dppvui6135120" path="res://Adventurer-1.5/Indvidual Sprites/adventurer-attack2-01-1.3.png" id="7_33wo8"]
 [ext_resource type="Texture2D" uid="uid://ddrww2a23qlb4" path="res://Adventurer-1.5/adventurer-run3-01.png" id="7_rsbhr"]
+[ext_resource type="Texture2D" uid="uid://cwpehyxfj8og5" path="res://Adventurer-1.5/Individual Sprites/adventurer-jump-01.png" id="7_y77s4"]
 [ext_resource type="Texture2D" uid="uid://buo50vfi2kr5t" path="res://Adventurer-1.5/adventurer-run3-02.png" id="8_mjxx7"]
+[ext_resource type="Texture2D" uid="uid://dvl2xhlgwujo1" path="res://Adventurer-1.5/Individual Sprites/adventurer-jump-02.png" id="8_r8tdc"]
 [ext_resource type="Texture2D" uid="uid://bd3hxaukdfmd1" path="res://Adventurer-1.5/Indvidual Sprites/adventurer-attack2-02-1.3.png" id="8_rsbhr"]
 [ext_resource type="Texture2D" uid="uid://b0534ivevbxwx" path="res://Adventurer-1.5/adventurer-run3-03.png" id="9_605yl"]
 [ext_resource type="Texture2D" uid="uid://dwup62k4fvq2a" path="res://Adventurer-1.5/Indvidual Sprites/adventurer-attack2-03-1.3.png" id="9_mjxx7"]
+[ext_resource type="Texture2D" uid="uid://xnq7wfks0mij" path="res://Adventurer-1.5/Individual Sprites/adventurer-jump-03.png" id="9_teyxv"]
 [ext_resource type="Texture2D" uid="uid://cxwa7dq67npw3" path="res://Adventurer-1.5/Indvidual Sprites/adventurer-attack2-04-1.3.png" id="10_605yl"]
 [ext_resource type="Texture2D" uid="uid://xay4ddsfff3s" path="res://Adventurer-1.5/adventurer-run3-04.png" id="10_q7f82"]
 [ext_resource type="Texture2D" uid="uid://3y1dl8s0rnd0" path="res://Adventurer-1.5/Indvidual Sprites/adventurer-attack2-05-1.3.png" id="11_q7f82"]
@@ -33,6 +39,17 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_r8tdc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_teyxv")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_tyfdd")
 }, {
 "duration": 1.0,
@@ -47,6 +64,23 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_q7f82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_y77s4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_r8tdc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_teyxv")
+}],
+"loop": false,
+"name": &"jump_up",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -146,12 +180,13 @@ radius = 4.0
 height = 20.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+floor_constant_speed = true
 script = ExtResource("1_uduk5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_qp52p")
-animation = &"running_with_sword"
+animation = &"jump_up"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

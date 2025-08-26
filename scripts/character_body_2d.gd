@@ -4,56 +4,85 @@ extends CharacterBody2D
 
 var combo_step := 0
 var combo_timer := 0.0
-var max_combo_delay := 0.7 # time window to chain combos
+var max_combo_delay := 0.6 # time window to chain combos
 var count = 0
 var attack_anims = ["slash_down", "slash_up", "swing_attack"]
 var next_attack_queued := false
 var run_speed = 200
 var is_attacking = false
+var gravity: float = 1300.0
+var jump_speed: float = -500.0
+var in_air = false
 
-func _process(delta):
-    if combo_timer > 0:
-        combo_timer -= delta
-        if combo_timer <= 0:
+func _physics_process(delta: float) -> void:
+    # --- Gravity ---
+    if not is_on_floor():
+        velocity.y += gravity * delta
+        in_air = true
+    else:
+        velocity.y = 0
+        in_air = false
+    # --- attack animation ----
+    if combo_timer > 0: 
+        combo_timer -= delta 
+        if combo_timer <= 0: 
             reset_combo()
-    if Input.is_action_just_pressed("attack"):
+    if Input.is_action_just_pressed("attack"): 
         handle_attack()
+    # --- Jump ---
+    if Input.is_action_just_pressed("jump") and is_on_floor():
+        velocity.y = jump_speed
+        in_air = true
+        sprite.play("jump_up")
+    # --- Horizontal movement ---
+    var direction = 0
     if Input.is_action_pressed("move_right") and not is_attacking:
-        handle_movement(delta, false)
+        direction += 1
+        sprite.flip_h = false
     if Input.is_action_pressed("move_left") and not is_attacking:
-        handle_movement(delta, true)
-    if Input.is_action_pressed("up") and not is_attacking:
-        position.y -= delta * run_speed
-    if Input.is_action_pressed("down") and not is_attacking:
-        position.y += delta * run_speed
-    if Input.is_action_just_released("move_left") or Input.is_action_just_released("move_right"):
-        sprite.play("idle")
+        direction -= 1
+        sprite.flip_h = true
 
+    velocity.x = direction * run_speed
+
+    # --- Animations ---
+    if velocity.y > 0 and in_air:
+         sprite.play("falling")  
+    
+    if direction != 0 and not in_air:
+        sprite.play("running_with_sword")
+    elif !in_air and !is_attacking:
+        sprite.play("idle")
+      # going down
+    # --- Apply movement ---
+    move_and_slide()
+    
 func handle_movement(delta, flip):
     if flip:
-        position.x -= delta * run_speed
+        velocity.x -= delta * run_speed
         sprite.flip_h = true
     else:
-        position.x += delta * run_speed
+        velocity.x += delta * run_speed
         sprite.flip_h = false
     sprite.play("running_with_sword")
-    move_and_slide()
+    
 
 func handle_attack():
-    is_attacking = true
     if sprite.is_playing() and sprite.animation in attack_anims:
         next_attack_queued = true
         return
-    play_combo_attack()
+    play_ground_combo_attack()
 
-func play_combo_attack():
-    var anim_name = attack_anims[combo_step]
-    sprite.play(anim_name)
-    combo_timer = max_combo_delay
+func play_ground_combo_attack():
+    if not in_air:  
+        is_attacking = true
+        var anim_name = attack_anims[combo_step]
+        sprite.play(anim_name)
+        combo_timer = max_combo_delay
 
 func reset_combo():
     combo_step = 0
-    sprite.play("idle")
+    #sprite.play("idle")
     next_attack_queued = false
     is_attacking = false
 
@@ -62,7 +91,7 @@ func _on_animated_sprite_2d_animation_finished():
         if next_attack_queued and combo_timer > 0:
             combo_step = (combo_step + 1) % attack_anims.size()
             next_attack_queued = false
-            play_combo_attack()
+            play_ground_combo_attack()
         elif combo_timer > 0:
             # Await further input, don't reset combo yet
             pass
