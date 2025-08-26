@@ -8,6 +8,8 @@ var max_combo_delay := 0.7 # time window to chain combos
 var count = 0
 var attack_anims = ["slash_down", "slash_up", "swing_attack"]
 var next_attack_queued := false
+var run_speed = 200
+var is_attacking = false
 
 func _process(delta):
     if combo_timer > 0:
@@ -16,8 +18,24 @@ func _process(delta):
             reset_combo()
     if Input.is_action_just_pressed("attack"):
         handle_attack()
+    if Input.is_action_pressed("move_right") and not is_attacking:
+        handle_movement(delta, false)
+    if Input.is_action_pressed("move_left") and not is_attacking:
+        handle_movement(delta, true)
+    if Input.is_action_just_released("move_left") or Input.is_action_just_released("move_right"):
+        sprite.play("idle")
+
+func handle_movement(delta, flip):
+    if flip:
+        position.x -= delta * run_speed
+        sprite.flip_h = true
+    else:
+        position.x += delta * run_speed
+        sprite.flip_h = false
+    sprite.play("running_with_sword")
 
 func handle_attack():
+    is_attacking = true
     if sprite.is_playing() and sprite.animation in attack_anims:
         next_attack_queued = true
         return
@@ -32,6 +50,7 @@ func reset_combo():
     combo_step = 0
     sprite.play("idle")
     next_attack_queued = false
+    is_attacking = false
 
 func _on_animated_sprite_2d_animation_finished():
     if sprite.animation in attack_anims:
