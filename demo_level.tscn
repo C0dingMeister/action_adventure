@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxb0leadl4wrn"]
+
+[ext_resource type="Texture2D" uid="uid://dcmsri028uy5j" path="res://parallax_demon_woods_pack/parallax_demon_woods_pack/layers/parallax-demon-woods-bg.png" id="1_cim0o"]
+[ext_resource type="Texture2D" uid="uid://c0qv6jgagjfxt" path="res://parallax_demon_woods_pack/parallax_demon_woods_pack/layers/parallax-demon-woods-far-trees.png" id="2_ok5di"]
+[ext_resource type="Texture2D" uid="uid://601jjb35t777" path="res://parallax_demon_woods_pack/parallax_demon_woods_pack/layers/parallax-demon-woods-mid-trees.png" id="3_b6b4t"]
+[ext_resource type="Texture2D" uid="uid://wnrurvymhd78" path="res://parallax_demon_woods_pack/parallax_demon_woods_pack/layers/parallax-demon-woods-close-trees.png" id="4_cq2aj"]
+[ext_resource type="PackedScene" uid="uid://c4u8etwajmpli" path="res://character_body_2d.tscn" id="5_ok5di"]
+
+[node name="demo_level" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+offset = Vector2(480, 272)
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 480, 272)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("1_cim0o")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(940, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource("2_ok5di")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(940, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+texture = ExtResource("3_b6b4t")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(940, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4"]
+texture = ExtResource("4_cq2aj")
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("5_ok5di")]
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
