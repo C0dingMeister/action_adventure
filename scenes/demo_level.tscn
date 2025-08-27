@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://djl5321g1mng2"]
+[gd_scene load_steps=10 format=3 uid="uid://djl5321g1mng2"]
 
 [ext_resource type="Texture2D" uid="uid://lxabslh0yy73" path="res://Tall Forest Files/Tall Forest Files/Layers/tileset.png" id="1_fmty4"]
 [ext_resource type="Texture2D" uid="uid://dcmsri028uy5j" path="res://parallax_demon_woods_pack/parallax_demon_woods_pack/layers/parallax-demon-woods-bg.png" id="2_i46ye"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://601jjb35t777" path="res://parallax_demon_woods_pack/parallax_demon_woods_pack/layers/parallax-demon-woods-mid-trees.png" id="4_88xa8"]
 [ext_resource type="Texture2D" uid="uid://wnrurvymhd78" path="res://parallax_demon_woods_pack/parallax_demon_woods_pack/layers/parallax-demon-woods-close-trees.png" id="5_6wx8f"]
 [ext_resource type="PackedScene" uid="uid://c4u8etwajmpli" path="res://scenes/character_body_2d.tscn" id="6_r34ug"]
+[ext_resource type="PackedScene" uid="uid://5lmmwb3suqp0" path="res://scenes/enemy1.tscn" id="7_i46ye"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cq2aj"]
 texture = ExtResource("1_fmty4")
@@ -49,7 +50,8 @@ texture = ExtResource("1_fmty4")
 3:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_m3f60"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 33
+physics_layer_0/collision_mask = 3
 sources/1 = SubResource("TileSetAtlasSource_cq2aj")
 
 [node name="demo_level" type="Node2D"]
@@ -115,7 +117,12 @@ motion_mirroring = Vector2(940, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer7"]
 texture = ExtResource("5_6wx8f")
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("6_r34ug")]
-position = Vector2(29, 434)
+[node name="player" parent="." groups=["player"] instance=ExtResource("6_r34ug")]
+position = Vector2(1361, 410)
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+[node name="Camera2D" type="Camera2D" parent="player"]
+limit_top = 0
+limit_bottom = 545
+
+[node name="enemy" parent="." instance=ExtResource("7_i46ye")]
+position = Vector2(1869, 419)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=44 format=3 uid="uid://5lmmwb3suqp0"]
+[gd_scene load_steps=47 format=3 uid="uid://5lmmwb3suqp0"]
 
 [ext_resource type="Texture2D" uid="uid://ctb13uvpl06uk" path="res://1 Enemy/PNG/attack-A1.png" id="1_nvx7r"]
+[ext_resource type="Script" uid="uid://cwoki46irm35a" path="res://scenes/enemy1.gd" id="1_r80rm"]
 [ext_resource type="Texture2D" uid="uid://dtxem63m1vryh" path="res://1 Enemy/PNG/attack-A2.png" id="2_r80rm"]
 [ext_resource type="Texture2D" uid="uid://d1a2lt43s0r4b" path="res://1 Enemy/PNG/attack-A3.png" id="3_dxpcl"]
 [ext_resource type="Texture2D" uid="uid://brwdw5755c7pd" path="res://1 Enemy/PNG/attack-A4.png" id="4_lg3un"]
@@ -43,6 +44,10 @@
 [ext_resource type="Texture2D" uid="uid://ba47dbif2bsk" path="res://1 Enemy/PNG/walk-5.png" id="41_7syo6"]
 [ext_resource type="Texture2D" uid="uid://2alon8afo4lj" path="res://1 Enemy/PNG/walk-6.png" id="42_nhnqa"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r80rm"]
+radius = 7.0
+height = 52.0
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_e1wrd"]
 animations = [{
 "frames": [{
@@ -71,7 +76,7 @@ animations = [{
 "texture": ExtResource("8_4n1ro")
 }],
 "loop": true,
-"name": &"a1",
+"name": &"attack1",
 "speed": 8.0
 }, {
 "frames": [{
@@ -109,7 +114,7 @@ animations = [{
 "texture": ExtResource("19_asxud")
 }],
 "loop": true,
-"name": &"a2",
+"name": &"attack2",
 "speed": 8.0
 }, {
 "frames": [{
@@ -207,10 +212,29 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r80rm"]
+size = Vector2(620, 230)
+
+[node name="enemy" type="CharacterBody2D"]
+scale = Vector2(1.25, 1)
+collision_layer = 2
+script = ExtResource("1_r80rm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_r80rm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_e1wrd")
-animation = &"a2"
+animation = &"walk"
 autoplay = "idle"
-frame_progress = 0.341501
+offset = Vector2(20, -15)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_r80rm")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
