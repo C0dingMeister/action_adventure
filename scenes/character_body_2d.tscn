@@ -201,7 +201,6 @@ radius = 4.0
 height = 20.0
 
 [node name="player" type="CharacterBody2D"]
-collision_layer = 15
 collision_mask = 15
 floor_constant_speed = true
 script = ExtResource("1_uduk5")

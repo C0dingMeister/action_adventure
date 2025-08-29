@@ -30,12 +30,14 @@ func _physics_process(delta: float) -> void:
             reset_combo()
     if Input.is_action_just_pressed("down") and not is_rolling:
     # Only roll if currently running (direction != 0, on floor, and not attacking)
-        if not in_air and velocity.x != 0:
+        if not in_air and sprite.animation == "running_with_sword":
             sprite.play("rolling")
             is_rolling = true
+            set_collision_mask_value(2, false)
+            set_collision_layer_value(1, false)
             # Keep roll direction same as current facing
             if sprite.flip_h:
-                velocity.x = -run_speed *delta
+                velocity.x = -run_speed * delta
             else:
                 velocity.x = run_speed * delta
         
@@ -106,6 +108,8 @@ func reset_combo():
 func _on_animated_sprite_2d_animation_finished():
     if sprite.animation == "rolling":
         is_rolling = false
+        set_collision_mask_value(2, true)
+        set_collision_layer_value(1, true)
     if sprite.animation in attack_anims:
         if next_attack_queued and combo_timer > 0:
             combo_step = (combo_step + 1) % attack_anims.size()
