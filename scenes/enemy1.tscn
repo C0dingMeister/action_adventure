@@ -216,7 +216,7 @@ animations = [{
 size = Vector2(620, 230)
 
 [node name="enemy" type="CharacterBody2D"]
-scale = Vector2(1.25, 1)
+scale = Vector2(1.5, 1)
 collision_layer = 2
 script = ExtResource("1_r80rm")
 

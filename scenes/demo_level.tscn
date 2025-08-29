@@ -118,11 +118,11 @@ motion_mirroring = Vector2(940, 0)
 texture = ExtResource("5_6wx8f")
 
 [node name="player" parent="." groups=["player"] instance=ExtResource("6_r34ug")]
-position = Vector2(1361, 410)
+position = Vector2(-12, 434)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 limit_top = 0
 limit_bottom = 545
 
 [node name="enemy" parent="." instance=ExtResource("7_i46ye")]
-position = Vector2(1869, 419)
+position = Vector2(1869, 430)
